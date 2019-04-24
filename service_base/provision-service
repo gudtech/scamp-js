@@ -4,6 +4,8 @@ set -e
 service="$1"
 mkdir -p "$SCAMP_CONFIG_DIR/services"
 
+touch "$SCAMP_CONFIG_DIR/main.conf"
+
 [ -f "$SCAMP_CONFIG_DIR/services/$service.key" ] && exit 0
 
 openssl req -new -nodes -subj "/CN=$hostname $(echo $service | sed 's|/|:|g')" -x509 -days 3650 \

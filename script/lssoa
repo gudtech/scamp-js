@@ -1,0 +1,7 @@
+var scamp = require('../lib/index.js');
+var mgr = scamp.module('util/serviceMgr').create({ cached: true });
+var Table = require('cli-table2');
+
+mgr.listActions().forEach(function (ab) {
+    console.log(ab[0]);
+});
