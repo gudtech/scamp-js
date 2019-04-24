@@ -20,8 +20,8 @@ var client = new (scamp.module('discovery/circularClient.js'))();
 
 function CacheFile() {
     this.contents     = new Buffer(0);
-    this._path        = main.config().val('discovery.cache_path');
-    this._maxAge      = main.config().val('discovery.cache_max_age', 120);
+    this._path        = scamp.config().val('discovery.cache_path','/tmp/scamp_discovery_cache');
+    this._maxAge      = scamp.config().val('discovery.cache_max_age', 120);
 }
 
 CacheFile.prototype.update = function (contents) {
@@ -79,7 +79,7 @@ CacheBag.prototype._issue = function() {
 var seen_timestamps = {};
 
 function Observer() {
-    var info = main.config().busInfo();
+    var info = scamp.config().busInfo();
 
     this.subSock = dgram.createSocket('udp4');
     this.subSock.bind( info.port, info.group );

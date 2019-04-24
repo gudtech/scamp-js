@@ -248,7 +248,7 @@ function ConnectionServer(params) {
     if (argp.opt('pidfile'))
         fs.writeFileSync(argp.opt('pidfile'), process.pid);
 
-    var cfg = main.config();
+    var cfg = scamp.config();
     var stateMgr = new StateManager({
         secret: cfg.val('circular.secret'),
         peerStrings: cfg.val('circular.peers','').split(/\s*,\s*/).filter(function(s){return !!s;}),

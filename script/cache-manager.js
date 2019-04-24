@@ -167,7 +167,7 @@ CacheFile.prototype._touch = function (real) {
 
 
 function CacheBag() {
-    this._file = new CacheFile(argp.opt('scoreboard') || scamp.config().val('discovery.cache_path'));
+    this._file = new CacheFile(argp.opt('scoreboard') || scamp.config().val('discovery.cache_path','/tmp/scamp_discovery_cache'));
     if (scamp.config().val('discovery.auth_localhost','')) {
         this._afile = new CacheFile(scamp.config().val('bus.authorized_services'));
     }

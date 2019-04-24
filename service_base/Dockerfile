@@ -1,15 +1,17 @@
 FROM node:lts-alpine
 
-ENV SCAMP_CONFIG_DIR /etc/SCAMP
+RUN apk add --update openssl && \
+    rm -rf /var/cache/apk/*
 
-COPY service_base/provision-service /
+ENV SCAMP_CONFIG_DIR /etc/scamp
+
+WORKDIR /scamp/
+COPY package*.json /scamp/
+RUN npm install
+COPY . /scamp/
+RUN mkdir -p /usr/local/lib/node/ && ln -s /scamp/lib /usr/local/lib/node/scamp
 
 WORKDIR /service/
-COPY package*.json ./
-COPY script/testservice.js test_service/service.js
+COPY test_service test
 
-RUN npm install
-
-COPY . .
-
-CMD [ "node", "test_service/service.js" ]
+ENTRYPOINT [ "/service/test/entrypoint.sh" ]
