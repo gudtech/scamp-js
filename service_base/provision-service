@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+service="$1"
+mkdir -p "$SCAMP_CONFIG_DIR/services"
+
+[ -f "$SCAMP_CONFIG_DIR/services/$service.key" ] && exit 0
+
+openssl req -new -nodes -subj "/CN=$hostname $(echo $service | sed 's|/|:|g')" -x509 -days 3650 \
+        -newkey rsa:4096 -out "$SCAMP_CONFIG_DIR/services/$service.crt" -keyout "$SCAMP_CONFIG_DIR/services/$service.key"
