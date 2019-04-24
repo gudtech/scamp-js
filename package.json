@@ -1,0 +1,18 @@
+{
+  "author": "güdTECH Inc",
+  "name": "scamp-js",
+  "description": "SCAMP JavaScript",
+  "version": "0.1.0",
+  "homepage": "http://gudtech.com",
+  "main": "lib/index.js",
+  "engines": {
+    "node": ">=0.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gudtech/scamp-js.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+  }
+}

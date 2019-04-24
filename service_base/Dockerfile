@@ -2,4 +2,4 @@ FROM node:lts-alpine
 
 ENV SCAMP_CONFIG_DIR /etc/SCAMP
 
-COPY provision-service /
+COPY service_base/provision-service /
