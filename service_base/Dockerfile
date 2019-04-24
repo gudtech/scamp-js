@@ -3,7 +3,8 @@ FROM node:lts-alpine
 RUN apk add --update openssl && \
     rm -rf /var/cache/apk/*
 
-ENV SCAMP_CONFIG_DIR /etc/scamp
+ENV SCAMPJS_VER=$(git rev-parse --short HEAD)
+ENV SCAMP_CONFIG_DIR=/etc/scamp
 
 WORKDIR /scamp/
 COPY package*.json /scamp/
