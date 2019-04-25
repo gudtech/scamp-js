@@ -1,3 +1,5 @@
-#!/bin/sh
+#!/bin/bash
 
+# build hook seems PWD seems to differ from the dockerhub settings
+cd ..
 docker build --build-arg SCAMPJS_VER=$(git rev-parse --short HEAD) -f $DOCKERFILE_PATH -t $IMAGE_NAME .

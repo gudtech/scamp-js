@@ -3,8 +3,11 @@ FROM node:lts-alpine
 RUN apk add --update openssl && \
     rm -rf /var/cache/apk/*
 
-ENV SCAMPJS_VER=$SCAMPJS_VER
+ARG SCAMPJS_VER
+ENV SCAMPJS_VER=${SCAMPJS_VER}
 ENV SCAMP_CONFIG_DIR=/etc/scamp
+
+RUN echo $SCAMPJS_VER
 
 WORKDIR /scamp/
 COPY package*.json /scamp/
