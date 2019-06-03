@@ -15,5 +15,12 @@
   "license": "MIT",
   "dependencies": {
     "argparser": "*"
+  },
+  "scripts": {
+    "test": "mocha --recursive"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4"
   }
 }
