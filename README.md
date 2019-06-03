@@ -10,6 +10,12 @@ This repository contains everything needed to create a nodejs SCAMP service
     # Start the test service
     docker run --rm -it gudtech/scamp-js
 
+# Running Tests
+
+To run the test suite
+
+    npm install
+    npm test
 
 # Sample Dockerfile for myservice
 
