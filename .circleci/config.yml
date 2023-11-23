@@ -24,6 +24,7 @@ jobs:
           command: export DOCKER_TAG=$(git show -s --date=format:'%Y-%m-%d' --format=%cd-%h) && echo "export DOCKER_TAG=\"$DOCKER_TAG\"" >> "$BASH_ENV"
       - gcp-gcr/build-image:
           image: scamp-js
+          dockerfile: service_base/Dockerfile
           tag: ${DOCKER_TAG}
       - gcp-gcr/push-image:
           image: scamp-js
