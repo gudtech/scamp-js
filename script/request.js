@@ -29,6 +29,6 @@ client.request( request, function ( err, response ) {
     response.on('end', function () { process.exit(); });
 });
 
-request.slurp( new Buffer(ap.opt('body') || '') );
+request.slurp( Buffer.from(ap.opt('body') || '') );
 
 setInterval(function () { }, 1000);

@@ -126,7 +126,7 @@ InConnection.prototype.sendReply = function (h) {
     console.log('packet out',this._id,h);
     var rpy = new Message(h);
     this._proto.sendMessage(h);
-    rpy.slurp(new Buffer(0));
+    rpy.slurp(Buffer.alloc(0));
 };
 
 InConnection.prototype.verifyBlob = function (blob) {

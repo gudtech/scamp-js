@@ -82,7 +82,7 @@ Peering.prototype.netKeepalive = function () {
     var me = this;
     var now = Date.now();
     //console.log('keepalive cycle');
-    var msg = new Buffer('X' + me.knownHosts().join(' '));
+    var msg = Buffer.from('X' + me.knownHosts().join(' '));
     me.knownHosts(true).forEach(function (a) {
         //console.log('send keepalive to',a);
         me.sock.send(msg, 0, msg.length, me._port, a);
@@ -127,7 +127,7 @@ Peering.prototype.multicast_in = function (blob,addr) {
 };
 
 function CacheFile(path) {
-    this.contents     = new Buffer(0);
+    this.contents     = Buffer.alloc(0);
     this._path        = path;
     this._maxAge      = scamp.config().val('discovery.cache_max_age', 120);
     try {
@@ -210,7 +210,7 @@ CacheBag.prototype._issue = function() {
     var auth_localhost = !!scamp.config().val('discovery.auth_localhost','');
 
     Object.keys(this._bag).sort().forEach(k => {
-        cat.push(new Buffer('\n%%%\n'));
+        cat.push(Buffer.from('\n%%%\n'));
         cat.push(this._bag[k].blob);
         let parsed = this._bag[k].parsed;
         let fingerprint = parsed.fingerprint;
@@ -234,7 +234,7 @@ CacheBag.prototype._issue = function() {
     }
 
     this._file.update(Buffer.concat(cat));
-    if (this._afile) this._afile.update(new Buffer(acat));
+    if (this._afile) this._afile.update(Buffer.from(acat));
 };
 
 
@@ -279,9 +279,9 @@ Observer.prototype.parseText = function (blob) {
         var chunks = blob.toString('binary').split('\n\n');
         var data = chunks[0];
         var cert = chunks[1] + '\n';
-        var sig  = new Buffer(chunks[2], 'base64');
+        var sig  = Buffer.from(chunks[2], 'base64');
 
-        var cert_der = new Buffer(cert.toString().replace(/---[^\n]+---\n/g,''), 'base64');
+        var cert_der = Buffer.from(cert.toString().replace(/---[^\n]+---\n/g,''), 'base64');
         var sha1 = crypto.createHash('sha1').update(cert_der).digest('hex');
         var fingerprint = sha1.replace(/..(?!$)/g, '$&:').toUpperCase();
 

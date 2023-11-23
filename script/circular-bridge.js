@@ -19,7 +19,7 @@ if (argp.opt('pidfile'))
 var client = new (scamp.module('discovery/circularClient.js'))();
 
 function CacheFile() {
-    this.contents     = new Buffer(0);
+    this.contents     = Buffer.alloc(0);
     this._path        = scamp.config().val('discovery.cache_path','/tmp/scamp_discovery_cache');
     this._maxAge      = scamp.config().val('discovery.cache_max_age', 120);
 }
@@ -67,7 +67,7 @@ CacheBag.prototype._issue = function() {
     var cat = [];
 
     Object.keys(this._bag).sort().forEach(function (k) {
-        cat.push(new Buffer('\n%%%\n'));
+        cat.push(Buffer.from('\n%%%\n'));
         cat.push(this._bag[k]);
     }, this);
 
@@ -103,11 +103,11 @@ Observer.prototype.parseText = function (blob) {
         var chunks = blob.toString('binary').split('\n\n');
         var data = chunks[0];
         var cert = chunks[1] + '\n';
-        var sig  = new Buffer(chunks[2], 'base64');
+        var sig  = Buffer.from(chunks[2], 'base64');
 
         var ref = JSON.parse( data );
 
-        var cert_der = new Buffer(cert.toString().replace(/---[^\n]+---\n/g,''), 'base64');
+        var cert_der = Buffer.from(cert.toString().replace(/---[^\n]+---\n/g,''), 'base64');
         var sha1 = crypto.createHash('sha1').update(cert_der).digest('hex');
         var fingerprint = sha1.replace(/..(?!$)/g, '$&:').toUpperCase();
 
