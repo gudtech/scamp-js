@@ -17,14 +17,15 @@ jobs:
             npm test
   build-and-push-image:
     executor: gcp-gcr/default
-    environment:
-      DOCKER_TAG:
     steps:
       - checkout
       - gcp-gcr/gcr-auth
       - run:
           command: export DOCKER_TAG=$(git show -s --date=format:'%Y-%m-%d' --format=%cd-%h) && echo "export DOCKER_TAG=\"$DOCKER_TAG\"" >> "$BASH_ENV"
-      - gcp-gcr/build-and-push-image:
+      - gcp-gcr/build-image:
+          image: scamp-js
+          tag: ${DOCKER_TAG}
+      - gcp-gcr/push-image:
           image: scamp-js
           tag: ${DOCKER_TAG}
 workflows:
