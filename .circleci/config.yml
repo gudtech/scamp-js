@@ -34,7 +34,7 @@ workflows:
       - build-and-push-image:
           context:
             - gcp-prod
-          dependencies:
+          requires:
             - build
           filters:
             branches:
