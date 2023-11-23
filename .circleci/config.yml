@@ -1,5 +1,6 @@
-version: 2
-
+version: '2.1'
+orbs:
+  gcp-gcr: circleci/gcp-gcr@0.15.3
 jobs:
   build:
     docker:
@@ -14,4 +15,28 @@ jobs:
           name: "Run Test Suite"
           command: |
             npm test
-
+  build-and-push-image:
+    executor: gcp-gcr/default
+    environment:
+      DOCKER_TAG:
+    steps:
+      - checkout
+      - gcp-gcr/gcr-auth
+      - run:
+          command: export DOCKER_TAG=$(git show -s --date=format:'%Y-%m-%d' --format=%cd-%h) && echo "export DOCKER_TAG=\"$DOCKER_TAG\"" >> "$BASH_ENV"
+      - gcp-gcr/build-and-push-image:
+          image: scamp-js
+          tag: ${DOCKER_TAG}
+workflows:
+  commit:
+    jobs:
+      - build
+      - build-and-push:
+          context:
+            - gcp-prod
+          dependencies:
+            - build
+          filters:
+            branches:
+              only:
+                - main
